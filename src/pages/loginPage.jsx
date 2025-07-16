@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState } from "react";
+import axios from "axios";
 
 export default function LoginPage(){
 
@@ -8,7 +9,19 @@ export default function LoginPage(){
     function handleLogin(){
         console.log("Email: ", email)
         console.log("Password: ", password)
-        console.log("Login button clicked")
+        
+        axios.post("http://localhost:3000/api/user/login",{
+            email: email,
+            password: password
+        }).then(
+            (response)=>{
+                console.log("Login successful", response.data);
+            }
+        ).catch(
+            (err)=>{
+                console.log("Login failed", err.response.data);
+            }
+        )
     }
 
     return(
