@@ -18,6 +18,19 @@ export default function LoginPage(){
             (response)=>{
                 console.log("Login successful", response.data);
                 toast.success("Login successful");
+                localStorage.setItem("token", response.data.token)
+
+                const user = response.data.user;
+
+                if(user.role === "admin"){
+                    //Go to admin page
+                }
+                else if(user.role === "fisherman"){
+                    //Go to fisherman page
+                }
+                else{
+                    //Go to customer page
+                }
             }
         ).catch(
             (err)=>{
