@@ -1,6 +1,23 @@
+import axios from "axios"
+import { useEffect, useState } from "react"
+
 export default function AdminProductsPage(){
+
+    const [products, setProducts] = useState([])
+
+    useEffect(
+        ()=>{
+            axios.get(import.meta.env.VITE_BACKEND_URL+"/api/product").then(
+                (response)=>{
+                    setProducts(response.data)
+                }
+            )
+        },
+        []
+    )
+
     return(
-        <div>
+        <div className="w-full h-full rounded-lg">
             <h1>Products</h1>
         </div>
     )
