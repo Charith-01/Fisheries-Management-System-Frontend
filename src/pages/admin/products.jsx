@@ -9,6 +9,7 @@ export default function AdminProductsPage(){
         ()=>{
             axios.get(import.meta.env.VITE_BACKEND_URL+"/api/product").then(
                 (response)=>{
+                    console.log(response.data)
                     setProducts(response.data)
                 }
             )
@@ -18,7 +19,17 @@ export default function AdminProductsPage(){
 
     return(
         <div className="w-full h-full rounded-lg">
-            <h1>Products</h1>
+            {
+                products.map(
+                    (product)=>{
+                        console.log(product.name)
+
+                        return(
+                           <h1>{product.productId}</h1>
+                        )
+                    }
+                )
+            }
         </div>
     )
 }
