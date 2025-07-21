@@ -13,6 +13,23 @@ export default function meadiaUpload(file){
             }
             const timeStamp = new Date().getTime()
             const newFileName = timeStamp+file.name
+
+            supabase.storage.from("images").upload(newFileName, file, {
+                cacheControl: "3600",
+                upsert: false,
+            }).then(
+                ()=>{
+                    const url = supabase.storage.from("images").getPublicUrl(newFileName).data.publicUrl
+                    resolve(url)
+                }
+            ).catch(
+                (err)=>{
+                    console.log(err)
+                    reject("File upload failed")
+                }
+            )
         }
     )
+
+    return promise;
 }
