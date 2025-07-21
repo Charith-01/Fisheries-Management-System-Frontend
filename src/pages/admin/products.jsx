@@ -9,17 +9,21 @@ import toast from "react-hot-toast";
 export default function AdminProductsPage(){
 
     const [products, setProducts] = useState([])
+    const [loaded, setLoaded] = useState(false)
 
     useEffect(
         ()=>{
-            axios.get(import.meta.env.VITE_BACKEND_URL+"/api/product").then(
-                (response)=>{
-                    console.log(response.data)
-                    setProducts(response.data)
-                }
-            )
+            if(!loaded){
+                axios.get(import.meta.env.VITE_BACKEND_URL+"/api/product").then(
+                    (response)=>{
+                        console.log(response.data)
+                        setProducts(response.data)
+                        setLoaded(true)
+                    }
+                )
+            }
         },
-        []
+        [loaded]
     )
 
     async function deleteProduct(id){
@@ -35,6 +39,7 @@ export default function AdminProductsPage(){
                     Authorization: "Bearer "+token
                 }
             })
+            setLoaded(false)
             toast.success("Product deleted successfully")
 
         }catch(err){
@@ -77,7 +82,7 @@ export default function AdminProductsPage(){
                                     <td className="p-2">{product.unit}</td>
                                     <td className="p-2">
                                         <div className="w-full h-full flex  justify-center">
-                                            <FaRegTrashAlt onClick={()=>{deleteProduct(product.productId)}} className="text-3xl m-[10px] hover:text-red-500 cursor-pointer" />
+                                            <FaRegTrashAlt onClick={()=>{deleteProduct(product.productId)}} className="text-3xl m-[10px] hover:text-red-500 cursor-pointer"/>
                                             <FaRegEdit className="text-3xl m-[10px] hover:text-blue-500 cursor-pointer" />
                                         </div>
                                     </td>
