@@ -20,7 +20,6 @@ export default function AdminDashboard(){
                     <Route path="/Orders" element={<h1>Orders</h1>}/>
                     <Route path="/addProduct" element={<AddProductForm/>}/>
                 </Routes>
-
             </div>
 
         </div>
