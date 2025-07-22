@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginPage(){
 
@@ -67,6 +67,13 @@ export default function LoginPage(){
                                 loading?"Loading...":"Login"
                             }
                         </button>
+                        <p className="text-gray-300">
+                            Don't have an account?
+                            &nbsp;
+                            <span className="text-blue-700 cursor-pointer hover:text-blue-900">
+                                <Link to={"/register"}>Register Now</Link>
+                            </span>
+                        </p>
                 </div>
             </div>
         </div>
