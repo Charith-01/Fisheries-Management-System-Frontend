@@ -7,11 +7,12 @@ export default function LoginPage(){
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     function handleLogin(){
-        console.log("Email: ", email)
-        console.log("Password: ", password)
+
+        setLoading(true)
         
         axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/login",{
             email: email,
@@ -33,11 +34,13 @@ export default function LoginPage(){
                 else{
                     navigate("/")
                 }
+                      setLoading(false)
             }
         ).catch(
             (err)=>{
                 console.log("Login failed", err.response.data);
                 toast.error(err.response.data.message||"Login failed");
+                setLoading(false)
             }
         )
     }
@@ -59,7 +62,11 @@ export default function LoginPage(){
                                 setPassword(e.target.value)
                             }
                         } className="w-[400px] h-[50px] border border-white rounded-2xl text-center m-[5px]" type="password" placeholder="Password"/>
-                        <button onClick={handleLogin} className="w-[380px] h-[50px] bg-blue-500 rounded-xl text-white cursor-pointer">Login</button>
+                        <button onClick={handleLogin} className="w-[400px] h-[50px] bg-blue-500 rounded-xl text-white cursor-pointer">
+                            {
+                                loading?"Loading...":"Login"
+                            }
+                        </button>
                 </div>
             </div>
         </div>
