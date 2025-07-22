@@ -1,15 +1,17 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { FaPlus } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import toast from "react-hot-toast";
+import Loader from "../../components/loader";
 
 export default function AdminProductsPage(){
 
     const [products, setProducts] = useState([])
     const [loaded, setLoaded] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(
         ()=>{
@@ -54,7 +56,7 @@ export default function AdminProductsPage(){
             <Link to={"/admin/addProduct"} className="absolute right-6 bottom-6 text-white bg-gray-700 p-[12px] rounded-full text-3xl cursor-pointer hover:bg-gray-400 hover:text-gray-700">
                 <FaPlus />
             </Link>
-            <table className="w-full">
+            {loaded&&<table className="w-full">
                 <thead>
                     <tr>
                         <th className="p-2">Product ID</th>
@@ -83,7 +85,16 @@ export default function AdminProductsPage(){
                                     <td className="p-2">
                                         <div className="w-full h-full flex  justify-center">
                                             <FaRegTrashAlt onClick={()=>{deleteProduct(product.productId)}} className="text-3xl m-[10px] hover:text-red-500 cursor-pointer"/>
-                                            <FaRegEdit className="text-3xl m-[10px] hover:text-blue-500 cursor-pointer" />
+                                            <FaRegEdit
+                                                onClick={
+                                                    ()=>{
+                                                        navigate("/admin/editProduct", {
+                                                            state:product
+                                                        })
+                                                    }
+                                                }
+                                                className="text-3xl m-[10px] hover:text-blue-500 cursor-pointer"
+                                            />
                                         </div>
                                     </td>
                                 </tr>
@@ -92,7 +103,12 @@ export default function AdminProductsPage(){
                     )
                 }
                 </tbody>
-            </table>
+            </table>}
+
+            {
+                !loaded&&
+                <Loader/>
+            }
             
         </div>
     )
