@@ -4,6 +4,7 @@ import { IoFish } from "react-icons/io5";
 import { FaListAlt } from "react-icons/fa";
 import AdminProductsPage from "./admin/products";
 import AddProductForm from "./admin/addProductForm";
+import EditProductForm from "./admin/editProduct";
 
 export default function AdminDashboard(){
     return(
@@ -19,6 +20,7 @@ export default function AdminDashboard(){
                     <Route path="/Products" element={<AdminProductsPage/>}/>
                     <Route path="/Orders" element={<h1>Orders</h1>}/>
                     <Route path="/addProduct" element={<AddProductForm/>}/>
+                    <Route path="/editProduct" element={<EditProductForm/>}/>
                 </Routes>
             </div>
 
