@@ -10,76 +10,77 @@ export default function EditProductForm(){
     const navigate = useNavigate();
     
     if(locationData.state == null){
-
         toast.error("Please select a product to edit")
         window.location.href = "/admin/products"
     }
 
-    const [productId, setPorductId] = useState(locationData.state.productId);
-    const [name, setName] = useState(locationData.state.name);
-    const [altName, setAltName] = useState(locationData.state.altNames);
-    const [price, setPrice] = useState(locationData.state.price);
-    const [labeledPrice, setLabeledPrice] = useState(locationData.state.labeledPrice);
-    const [stock, setStock] = useState(locationData.state.stock);
-    const [category, setCategory] = useState(locationData.state.category);
-    const [unit, setUnit] = useState(locationData.state.unit);
-    const [description, setDescription] = useState(locationData.state.description);
+    const [productId, setProductId] = useState(locationData.state?.productId || "");
+    const [name, setName] = useState(locationData.state?.name || "");
+    const [altName, setAltName] = useState(locationData.state?.altNames?.join(", ") || "");
+    const [price, setPrice] = useState(locationData.state?.price || "");
+    const [labeledPrice, setLabeledPrice] = useState(locationData.state?.labeledPrice || "");
+    const [stock, setStock] = useState(locationData.state?.stock || "");
+    const [category, setCategory] = useState(locationData.state?.category || "");
+    const [unit, setUnit] = useState(locationData.state?.unit || "");
+    const [description, setDescription] = useState(locationData.state?.description || "");
     const [images, setImages] = useState([]);
 
     async function handleSubmit() {
+        const promisesArray = [];
 
-        const promisesArray = []
         for(let i=0; i<images.length; i++){
-            const promise = meadiaUpload(images[i])
-            promisesArray[i] = promise
-        }
-        try{
-
-
-        const result = await Promise.all(promisesArray)
-
-        const altNamesInArray = altName.split(",").map(name => name.trim()).filter(n => n);
-
-        const product = {
-            productId: productId.trim(),
-            name: name.trim(),
-            altNames: altNamesInArray,
-            price: Number(price),
-            labeledPrice: Number(labeledPrice),
-            stock: Number(stock),
-            category: category.trim(),
-            unit: unit.trim(),
-            description: description.trim(),
-            images: result
-        };
-
-        const token = localStorage.getItem("token");
-        if (!token) {
-            toast.error("You must be logged in to add a product");
-            return;
+            const promise = meadiaUpload(images[i]);
+            promisesArray[i] = promise;
         }
 
-        await axios.post(import.meta.env.VITE_BACKEND_URL + "/api/product", product, {
-            headers: {
-                "Authorization": "Bearer " + token
+        try {
+            let result = await Promise.all(promisesArray);
+
+            if(images.length === 0){
+                result = locationData.state;
             }
-        })
 
-        toast.success("Product added successfully")
-        navigate("/admin/products");
+            const altNamesInArray = altName.split(",").map(name => name.trim()).filter(n => n);
 
-    }catch(err){
-        console.log(err)
-        toast.error(err?.response?.data?.message || "Product adding failed");
-    }
+            const product = {
+                productId: productId.trim(),
+                name: name.trim(),
+                altNames: altNamesInArray,
+                price: Number(price),
+                labeledPrice: Number(labeledPrice),
+                stock: Number(stock),
+                category: category.trim(),
+                unit: unit.trim(),
+                description: description.trim(),
+                images: result
+            };
 
+            const token = localStorage.getItem("token");
+            if (!token) {
+                toast.error("You must be logged in to update a product");
+                return;
+            }
+
+            await axios.put(import.meta.env.VITE_BACKEND_URL + "/api/product/" + productId, product, {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            });
+
+            toast.success("Product updated successfully");
+            navigate("/admin/products");
+
+        } catch(err) {
+            console.log(err);
+            toast.error(err?.response?.data?.message || "Product updating failed");
+        }
     }
 
     return (
         <div className="w-full h-full flex justify-center items-center rounded-lg">
             <div className="w-[500px] h-[700px] bg-white rounded-lg shadow-2xl flex flex-col items-center">
                 <h1 className="text-3xl font-bold text-gray-700 m-[10px]">Edit Product</h1>
-                <input value={productId} onChange={(e) => setPorductId(e.target.value)} className="w-[400px] h-[50px] border border-gray-500 rounded-2xl text-center m-[5px]" type="text" placeholder="Product ID" />
+                <input disabled value={productId} onChange={(e) => setProductId(e.target.value)} className="w-[400px] h-[50px] border border-gray-500 rounded-2xl text-center m-[5px]" type="text" placeholder="Product ID" />
                 <input value={name} onChange={(e) => setName(e.target.value)} className="w-[400px] h-[50px] border border-gray-500 rounded-2xl text-center m-[5px]" type="text" placeholder="Product Name" />
                 <input value={altName} onChange={(e) => setAltName(e.target.value)} className="w-[400px] h-[50px] border border-gray-500 rounded-2xl text-center m-[5px]" type="text" placeholder="Alternative Names" />
                 <input value={price} onChange={(e) => setPrice(e.target.value)} className="w-[400px] h-[50px] border border-gray-500 rounded-2xl text-center m-[5px]" type="number" placeholder="Price" />
