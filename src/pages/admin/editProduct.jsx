@@ -7,20 +7,24 @@ import meadiaUpload from "../../utils/meadiaUpload";
 export default function EditProductForm(){
 
     const locationData = useLocation();
-    
-    
-
-    const [productId, setPorductId] = useState("");
-    const [name, setName] = useState("");
-    const [altName, setAltName] = useState("");
-    const [price, setPrice] = useState("");
-    const [labeledPrice, setLabeledPrice] = useState("");
-    const [stock, setStock] = useState("");
-    const [category, setCategory] = useState("");
-    const [unit, setUnit] = useState("");
-    const [description, setDescription] = useState("");
-    const [images, setImages] = useState([]);
     const navigate = useNavigate();
+    
+    if(locationData.state == null){
+
+        toast.error("Please select a product to edit")
+        window.location.href = "/admin/products"
+    }
+
+    const [productId, setPorductId] = useState(locationData.state.productId);
+    const [name, setName] = useState(locationData.state.name);
+    const [altName, setAltName] = useState(locationData.state.altNames);
+    const [price, setPrice] = useState(locationData.state.price);
+    const [labeledPrice, setLabeledPrice] = useState(locationData.state.labeledPrice);
+    const [stock, setStock] = useState(locationData.state.stock);
+    const [category, setCategory] = useState(locationData.state.category);
+    const [unit, setUnit] = useState(locationData.state.unit);
+    const [description, setDescription] = useState(locationData.state.description);
+    const [images, setImages] = useState([]);
 
     async function handleSubmit() {
 
