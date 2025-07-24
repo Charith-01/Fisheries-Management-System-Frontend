@@ -48,8 +48,9 @@ export default function LoginPage(){
     return(
         <div className="w-full h-screen flex">
             <div className="w-[40%] h-full bg-white flex justify-center items-center"> 
-                <div className="w-[450px] h-[600px] flex justify-center items-center flex-col">
-                    <h1 className="font-semibold text-gray-700 text-xl mt-[20px]">Welcome Back!</h1>
+                <div className="w-[450px] h-[700px] flex justify-center items-center flex-col">
+                    <div className="w-[140px] h-[90px] bg-[url(/logo.jpg)] bg-cover bg-center bg-no-repeat mb-10"></div>
+                    <h1 className="font-semibold text-gray-700 text-xl">Welcome Back!</h1>
                     <label className="text-gray-700">Log in with your Email</label>
                     <input onChange={
                         (e)=>{
@@ -61,7 +62,7 @@ export default function LoginPage(){
                             setPassword(e.target.value)
                         }
                     } className="w-[400px] h-[50px] border border-blue-500 focus:ring-1 focus:ring-blue-700 outline-none transition-all text-center m-[10px]" type="password" placeholder="Password*"/>
-                    <button onClick={handleLogin} className="w-[400px] h-[50px] bg-blue-500 rounded-lg text-white cursor-pointer m-[15px] hover:bg-blue-800">
+                    <button onClick={handleLogin} className="w-[400px] h-[50px] bg-blue-500 rounded-lg text-white cursor-pointer m-[15px] hover:bg-blue-600">
                         {
                             loading?"Loading...":"Login"
                         }
