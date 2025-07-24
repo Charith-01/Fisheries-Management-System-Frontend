@@ -46,35 +46,38 @@ export default function LoginPage(){
     }
 
     return(
-        <div className="w-full h-screen bg-[url(/login-bg.jpg)] bg-cover bg-center bg-no-repeat flex">
-            <div className="w-[50%] h-full">
+        <div className="w-full h-screen flex">
+            <div className="w-[40%] h-full bg-white flex justify-center items-center"> 
+                <div className="w-[450px] h-[600px] flex justify-center items-center flex-col">
+                    <h1 className="font-semibold text-gray-700 text-xl mt-[20px]">Welcome Back!</h1>
+                    <label className="text-gray-700">Log in with your Email</label>
+                    <input onChange={
+                        (e)=>{
+                            setEmail(e.target.value)
+                        }
+                    } className="w-[400px] h-[50px] border border-blue-500 focus:ring-1 focus:ring-blue-700 outline-none transition-all text-center m-[10px]" type="email" placeholder="Email address*"/>
+                    <input onChange={
+                        (e)=>{
+                            setPassword(e.target.value)
+                        }
+                    } className="w-[400px] h-[50px] border border-blue-500 focus:ring-1 focus:ring-blue-700 outline-none transition-all text-center m-[10px]" type="password" placeholder="Password*"/>
+                    <button onClick={handleLogin} className="w-[400px] h-[50px] bg-blue-500 rounded-lg text-white cursor-pointer m-[15px] hover:bg-blue-800">
+                        {
+                            loading?"Loading...":"Login"
+                        }
+                    </button>
+                    <p className="text-gray-700 m-[5px]">
+                        Don't have an account?
+                        &nbsp;
+                        <span className="text-blue-500 cursor-pointer hover:text-blue-700 font-medium">
+                            <Link to={"/register"}>Register Now</Link>
+                        </span>
+                    </p>
+                </div>
 
             </div>
-            <div className="w-[50%] h-full flex justify-center items-center">
-                <div className="w-[450px] h-[600px] backdrop-blur-xl shadow-2xl rounded-xl flex justify-center items-center flex-col">
-                        <input onChange={
-                            (e)=>{
-                                setEmail(e.target.value)
-                            }
-                        } className="w-[400px] h-[50px] border border-white rounded-2xl text-center m-[5px]" type="email" placeholder="Email"/>
-                        <input onChange={
-                            (e)=>{
-                                setPassword(e.target.value)
-                            }
-                        } className="w-[400px] h-[50px] border border-white rounded-2xl text-center m-[5px]" type="password" placeholder="Password"/>
-                        <button onClick={handleLogin} className="w-[400px] h-[50px] bg-blue-500 rounded-xl text-white cursor-pointer">
-                            {
-                                loading?"Loading...":"Login"
-                            }
-                        </button>
-                        <p className="text-gray-300">
-                            Don't have an account?
-                            &nbsp;
-                            <span className="text-blue-700 cursor-pointer hover:text-blue-900">
-                                <Link to={"/register"}>Register Now</Link>
-                            </span>
-                        </p>
-                </div>
+            <div className="w-[60%] h-full bg-[url(/login-bg.jpg)] bg-cover bg-center bg-no-repeat">
+
             </div>
         </div>
     )
