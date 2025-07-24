@@ -1,6 +1,6 @@
 export default function Header() {
     return (
-        <header className="w-full bg-gradient-to-r from-blue-600 to-blue-500 shadow-lg h-16 text-white sticky top-0 z-50">
+        <header className="w-full bg-gradient-to-r from-blue-600 to-blue-500 shadow-lg h-[70px] text-white sticky top-0 z-50">
             <div className="container mx-auto px-4 h-full flex items-center justify-between">
                 <h1 className="text-2xl font-bold tracking-tight flex items-center">
                     <svg 
