@@ -1,7 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import Header from './components/header'
-import ProductCard from './components/product.card'
 import AdminDashboard from './pages/adminDashboard'
 import LoginPage from './pages/loginPage'
 import { Toaster } from 'react-hot-toast'
@@ -16,7 +14,7 @@ function App() {
         <Route path="/admin/*" element={<AdminDashboard/>}/>
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/register" element={<RegisterPage/>}/>
-        <Route path="/" element={<HomePage/>}/>
+        <Route path="/*" element={<HomePage/>}/>
         <Route path="/*" element={<h1>404 Not Found</h1>}/>
       </Routes>
     </BrowserRouter>
